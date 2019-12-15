@@ -1,0 +1,17 @@
+{
+    "name": "Tools.References.Editor",
+    "references": [
+        "GUID:9b6e68688a86dce44b7586e520c67f60"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}
