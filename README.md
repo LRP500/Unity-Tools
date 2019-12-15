@@ -1,5 +1,5 @@
 # Unity-Tools
-Toolbox for Unity game development
+Toolbox for Unity game development [WORK IN PROGRESS]
 
 Contains :
 
@@ -7,12 +7,14 @@ Contains :
   - Abstract behaviour
   - Abstract factory
   - Weighted random
-  - Google doc importer
+  - GoogleDoc importer
   - Editor coroutine
   - Event Bus
   - Navigation utils
-  - Math utils
-  - Extensions
+  - Math utils (parabola, ...)
+  - UI utils (resourge gauge, worldSpace camera facing, ...)
+  - Gameplay utils (Damager/Damageable, ...)
+  - Extensions (Transform, float/int, Collider, ...)
   - Singleton Scriptable Object
   - Scriptable Object variables & references
   - Serialized Dictionary & HashSet
