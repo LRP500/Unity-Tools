@@ -1,5 +1,5 @@
 # Unity-Tools
-Toolbox for Unity game development
+Toolbox for Unity game development [WORK IN PROGRESS]
 
 Contains :
 
@@ -16,5 +16,3 @@ Contains :
   - Singleton Scriptable Object
   - Scriptable Object variables & references
   - Serialized Dictionary & HashSet
-
-WORK IN PROGRESS
