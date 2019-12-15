@@ -10,7 +10,7 @@ Contains :
   - GoogleDoc importer
   - Editor coroutine
   - Event Bus
-  - Navigation utils
+  - Navigation utils (runtime scene reference, game screen, ...)
   - Math utils (parabola, ...)
   - UI utils (resourge gauge, ...)
   - Gameplay utils (Damager/Damageable, ...)
