@@ -16,3 +16,5 @@ Contains :
   - Singleton Scriptable Object
   - Scriptable Object variables & references
   - Serialized Dictionary & HashSet
+
+WORK IN PROGRESS
