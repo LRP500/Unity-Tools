@@ -12,7 +12,7 @@ Contains :
   - Event Bus
   - Navigation utils
   - Math utils (parabola, ...)
-  - UI utils (resourge gauge, worldSpace camera facing, ...)
+  - UI utils (resourge gauge, ...)
   - Gameplay utils (Damager/Damageable, ...)
   - Extensions (Transform, float/int, Collider, ...)
   - Singleton Scriptable Object
