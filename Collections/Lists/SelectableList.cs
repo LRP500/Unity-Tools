@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TopDownShooter
+namespace TopDownStealth
 {
     public abstract class SelectableList<T> : ScriptableObject
     {

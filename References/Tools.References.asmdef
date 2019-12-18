@@ -1,12 +1,9 @@
 {
-    "name": "Tools.References.Editor",
+    "name": "Tools.References",
     "references": [
-        "GUID:70c32d1a419fdc54187926026f03ce95",
         "GUID:38b60048b2d289c4a9d762ee944348b6"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
