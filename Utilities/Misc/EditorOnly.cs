@@ -4,14 +4,14 @@ namespace Tools.Editor
 {
     public class EditorOnly : MonoBehaviour
     {
-        public bool disableOnPlay = true;
+        public bool disableOnStart = true;
 
-        private void Awake()
+        private void Start()
         {
 #if !UNITY_EDITOR
-       Destroy(this.gameObject);
+            Destroy(this.gameObject);
 #else
-            gameObject.SetActive(!disableOnPlay);
+            gameObject.SetActive(!disableOnStart);
 #endif
         }
     }

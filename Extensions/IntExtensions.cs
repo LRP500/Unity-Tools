@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Tool.Extensions
+﻿namespace Tool.Extensions
 {
     public static class IntExtensions
     {
@@ -12,7 +10,7 @@ namespace Tool.Extensions
         /// <param name="max">max value</param>
         /// <param name="include">include bounds</param>
         /// <returns></returns>
-        public static bool InRange(this int self, int min, int max, bool include)
+        public static bool InRange(this int self, int min, int max, bool include = false)
         {
             return include ? self >= min && self <= max : self > min && self < max;
         }

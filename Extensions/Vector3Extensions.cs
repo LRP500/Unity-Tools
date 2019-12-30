@@ -46,6 +46,34 @@ namespace Extensions
         }
 
         /// <summary>
+        /// Check equality with floating point imprecision tolerance
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
+        public static bool AlmostEqualXZ(this Vector3 v1, Vector3 v2, float tolerance)
+        {
+            bool equal = !(Mathf.Abs(v1.x - v2.x) > tolerance);
+            if (Mathf.Abs(v1.z - v2.z) > tolerance) equal = false;
+            return equal;
+        }
+
+        /// <summary>
+        /// Check equality with floating point imprecision tolerance
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
+        public static bool AlmostEqualXY(this Vector3 v1, Vector3 v2, float tolerance)
+        {
+            bool equal = !(Mathf.Abs(v1.x - v2.x) > tolerance);
+            if (Mathf.Abs(v1.y - v2.y) > tolerance) equal = false;
+            return equal;
+        }
+
+        /// <summary>
         /// Sets vector's x value
         /// </summary>
         /// <param name="vector"></param>
