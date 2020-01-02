@@ -11,23 +11,47 @@ namespace Tools.Navigation
         [SerializeField]
         private SceneReference _master = null;
 
-        public IEnumerator SwitchScenes(SceneReference scene)
-        {
-            List<Scene> exceptions = new List<Scene>
-            {
-                SceneManager.GetSceneByPath(_master.path),
-                SceneManager.GetSceneByPath(scene.path)
-            };
+        [SerializeField]
+        private SceneReference _loadingScreen = null;
 
-            yield return LoadScene(scene);
-            yield return UnloadAllScenes(exceptions);
+        public IEnumerator FastLoad(SceneReference scene)
+        {
+            yield return LoadAdditiveScene(scene);
+
+            yield return UnloadAllScenes(new List<Scene>
+            {
+                SceneManager.GetSceneByPath(scene.path)
+            });
         }
 
-        public IEnumerator LoadScene(SceneReference scene)
+        public IEnumerator DeepLoad(SceneReference scene, System.Action loadingScreenCallback)
         {
-            yield return SceneManager.LoadSceneAsync(scene.path, LoadSceneMode.Additive);
+            if (_loadingScreen == null || string.IsNullOrEmpty(_loadingScreen.path))
+            {
+                Debug.LogWarning("Couldn't deep load : loading scene path is set to null", this);
+                yield return FastLoad(scene);
+            }
+            else
+            {
+                List<Scene> exceptions = new List<Scene>
+                {
+                    SceneManager.GetSceneByPath(_master.path),
+                    SceneManager.GetSceneByPath(_loadingScreen.path)
+                };
 
-            SceneManager.SetActiveScene(SceneManager.GetSceneByPath(scene.path));
+                yield return LoadAdditiveScene(_loadingScreen);
+
+                loadingScreenCallback?.Invoke();
+            }
+        }
+
+        public IEnumerator LoadAdditiveScene(SceneReference scene)
+        {
+            if (!SceneManager.GetSceneByPath(scene.path).isLoaded)
+            {
+                yield return SceneManager.LoadSceneAsync(scene.path, LoadSceneMode.Additive);
+                SceneManager.SetActiveScene(SceneManager.GetSceneByPath(scene.path));
+            }
         }
 
         private Scene[] GetLoadedScenes()
@@ -43,14 +67,29 @@ namespace Tools.Navigation
             return loadedScenes;
         }
 
-        private IEnumerator UnloadAllScenes(List<Scene> exceptions = null)
+        public IEnumerator UnloadAllScenes(List<Scene> exceptions = null)
         {
             foreach (Scene loadedScene in GetLoadedScenes())
             {
-                if (exceptions != null && !exceptions.Contains(loadedScene))
+                /// Active scene
+                if (loadedScene == SceneManager.GetActiveScene())
                 {
-                    yield return SceneManager.UnloadSceneAsync(loadedScene);
+                    continue;
                 }
+
+                /// Master scene
+                if (loadedScene.path == _master.path)
+                {
+                    continue;
+                }
+
+                /// Exceptions
+                if (exceptions != null && exceptions.Contains(loadedScene))
+                {
+                    continue;
+                }
+
+                yield return SceneManager.UnloadSceneAsync(loadedScene);
             }
         }
 

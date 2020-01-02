@@ -26,7 +26,7 @@ namespace TopDownStealth
 
         private void OnDestroy()
         {
-            _material.DisableKeyword(_variantName);            
+            _material.DisableKeyword(_variantName);
         }
 
         public void EnableVariant(string variantName)
