@@ -8,6 +8,18 @@ namespace Tools.Extensions
     public static class FloatExtensions
     {
         /// <summary>
+        /// Return true if float is almost equal to value, return false otherwise. 
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="value"></param>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
+        public static bool AlmostEqual(this float self, float value, float tolerance)
+        {
+            return Mathf.Abs(self - value) < tolerance;
+        }
+
+        /// <summary>
         /// Return true if value is between min and max, return false otherwise
         /// </summary>
         /// <param name="self">self</param>

@@ -16,7 +16,7 @@ namespace Tools.Navigation
 
         public IEnumerator FastLoad(SceneReference scene)
         {
-            yield return LoadAdditiveScene(scene);
+            yield return LoadAdditive(scene);
 
             yield return UnloadAllScenes(new List<Scene>
             {
@@ -39,13 +39,13 @@ namespace Tools.Navigation
                     SceneManager.GetSceneByPath(_loadingScreen.path)
                 };
 
-                yield return LoadAdditiveScene(_loadingScreen);
+                yield return LoadAdditive(_loadingScreen);
 
                 loadingScreenCallback?.Invoke();
             }
         }
 
-        public IEnumerator LoadAdditiveScene(SceneReference scene)
+        public IEnumerator LoadAdditive(SceneReference scene)
         {
             if (!SceneManager.GetSceneByPath(scene.path).isLoaded)
             {
@@ -93,7 +93,7 @@ namespace Tools.Navigation
             }
         }
 
-        public void QuitGame()
+        public static void QuitGame()
         {
 #if UNITY_EDITOR
             Debug.Log("Application.Quit()");
