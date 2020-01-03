@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,11 +15,21 @@ namespace Tools.Navigation
         [SerializeField]
         private SceneReference _loadingScreen = null;
 
+        private Stack<SceneReference> _history = null;
+        public Stack<SceneReference> History
+        {
+            get
+            {
+                _history = _history ?? new Stack<SceneReference>();
+                return _history;
+            }
+        }
+
         public IEnumerator FastLoad(SceneReference scene)
         {
             yield return LoadAdditive(scene);
 
-            yield return UnloadAllScenes(new List<Scene>
+            yield return UnloadAll(new List<Scene>
             {
                 SceneManager.GetSceneByPath(scene.path)
             });
@@ -45,12 +56,18 @@ namespace Tools.Navigation
             }
         }
 
-        public IEnumerator LoadAdditive(SceneReference scene)
+        public IEnumerator LoadAdditive(SceneReference scene, bool setActive = true)
         {
             if (!SceneManager.GetSceneByPath(scene.path).isLoaded)
             {
                 yield return SceneManager.LoadSceneAsync(scene.path, LoadSceneMode.Additive);
-                SceneManager.SetActiveScene(SceneManager.GetSceneByPath(scene.path));
+
+                if (setActive)
+                {
+                    SceneManager.SetActiveScene(SceneManager.GetSceneByPath(scene.path));
+                }
+
+                TrackScene(scene);
             }
         }
 
@@ -67,7 +84,7 @@ namespace Tools.Navigation
             return loadedScenes;
         }
 
-        public IEnumerator UnloadAllScenes(List<Scene> exceptions = null)
+        public IEnumerator UnloadAll(List<Scene> exceptions = null)
         {
             foreach (Scene loadedScene in GetLoadedScenes())
             {
@@ -93,6 +110,17 @@ namespace Tools.Navigation
             }
         }
 
+        public IEnumerator UnloadSingle(SceneReference scene)
+        {
+            yield return SceneManager.UnloadSceneAsync(scene.name);
+
+            /// Pop scene from history stack.
+            UntrackScene(scene);
+            
+            /// Set previous scene active.
+            SceneManager.SetActiveScene(SceneManager.GetSceneByPath(_history.Peek().path));
+        }
+
         public static void QuitGame()
         {
 #if UNITY_EDITOR
@@ -101,6 +129,22 @@ namespace Tools.Navigation
 #else
 			Application.Quit();
 #endif
+        }
+
+        public void TrackScene(SceneReference scene)
+        {
+            if (History.Count == 0 || (History.Count > 0 && History.Peek() != scene))
+            {
+                History.Push(scene);
+            }
+        }
+
+        public void UntrackScene(SceneReference scene)
+        {
+            if (History.Count > 0 && History.Peek() == scene)
+            {
+                History.Pop();
+            }
         }
     }
 }

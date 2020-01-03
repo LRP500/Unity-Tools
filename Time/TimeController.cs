@@ -12,9 +12,12 @@ namespace Tools
 
         [SerializeField]
         private BoolVariable _gamePaused = null;
+        public bool IsGamePaused => _gamePaused.Value;
 
         private static float _deltaTime = 0;
+
         private static float _lastFrameTime = 0;
+
         private float _timer = 0;
 
         protected virtual void Awake()
