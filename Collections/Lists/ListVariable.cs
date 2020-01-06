@@ -9,6 +9,12 @@ namespace Tools.Collections
         private List<T> _items = null;
         public List<T> Items => _items;
 
+        public T this[int index]
+        {
+            get { return _items[index]; }
+            set { _items[index] = value; }
+        }
+
         public void Add(T item)
         {
             _items = _items ?? new List<T>();
