@@ -1,7 +1,6 @@
-﻿using Tools.Navigation;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace TopDownStealth
+namespace Tools.Navigation
 {
     public class TrackEditorScene : MonoBehaviour
     {

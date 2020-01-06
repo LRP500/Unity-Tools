@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TopDownStealth
+namespace Tools
 {
     /// <summary>
     /// Enable/Disable local shader variant from material
