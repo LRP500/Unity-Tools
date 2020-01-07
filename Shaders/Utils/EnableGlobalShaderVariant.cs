@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Tools
+namespace Tools.Shaders
 {
     /// <summary>
     /// Enable/Disable global shader variant
