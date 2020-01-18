@@ -26,6 +26,14 @@ namespace Tools.Variables
             }
         }
 
+        /// <summary>
+        /// Reset variable to it's default value.
+        /// </summary>
+        public void Clear()
+        {
+            SetValue(default);
+        }
+
         public void Subscribe(System.Action callback)
         {
             OnValueChanged += callback;
