@@ -34,6 +34,11 @@ namespace Tools.Variables
             SetValue(default);
         }
 
+        private void OnValidate()
+        {
+            OnValueChanged?.Invoke();
+        }
+
         public void Subscribe(System.Action callback)
         {
             OnValueChanged += callback;

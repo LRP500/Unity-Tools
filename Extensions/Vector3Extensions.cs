@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Tools.Extensions;
 using UnityEngine;
 
 namespace Extensions
@@ -136,5 +137,27 @@ namespace Extensions
             vector = new Vector3(vector.x, y, z);
         }
 
+        /// <summary>
+        /// Return true if world point is within camera frustum limits, returns false otherwise
+        /// </summary>
+        /// <param name="worldPos"></param>
+        /// <param name="camera"></param>
+        /// <returns></returns>
+        public static bool IsWorldPointVisible(this Vector3 worldPos, Camera camera)
+        {
+            Vector3 screenPos = camera.WorldToScreenPoint(worldPos);
+            return screenPos.IsScreenPointVisible();
+        }
+
+        /// <summary>
+        /// Return true if screen point is within screen limits, returns false otherwise
+        /// </summary>
+        /// <param name="screenPos"></param>
+        /// <param name="camera"></param>
+        /// <returns></returns>
+        public static bool IsScreenPointVisible(this Vector3 screenPos)
+        {
+            return screenPos.x.InRange(0, Screen.width) && screenPos.y.InRange(0, Screen.height);
+        }
     }
 }
