@@ -1,8 +1,8 @@
 {
     "name": "Tools.References.Editor",
     "references": [
-        "GUID:70c32d1a419fdc54187926026f03ce95",
-        "GUID:38b60048b2d289c4a9d762ee944348b6"
+        "GUID:8c38d620fc8d5b34d948042b64dd9763",
+        "GUID:368863ae2d897b141921509236a2e3a0"
     ],
     "includePlatforms": [
         "Editor"
