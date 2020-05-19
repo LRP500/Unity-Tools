@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Tools
+namespace Tools.FSM
 {
     /// <summary>
     /// State machine's context base class.

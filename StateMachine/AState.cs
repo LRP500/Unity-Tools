@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Tools
+namespace Tools.FSM
 {
     /// <summary>
     /// State machine state's base class.

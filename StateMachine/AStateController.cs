@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Tools
+namespace Tools.FSM
 {
     /// <summary>
     /// State machine's controller base class.
@@ -58,6 +58,8 @@ namespace Tools
         /// <param name="state"></param>
         public virtual void RunState(AState state)
         {
+            if (state == null) return;
+
             _previousState = _currentState;
             _currentState = state;
             StartCoroutine(state.Run(this));
