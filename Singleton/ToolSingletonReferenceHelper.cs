@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tools
 {
-    public class SingletonReferenceHelper : MonoBehaviour
+    public class ToolSingletonReferenceHelper : MonoBehaviour
     {
         [SerializeField]
         private EventManager _eventManager = null;
