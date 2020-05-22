@@ -1,7 +1,7 @@
 ﻿using Tools.Variables;
 using UnityEngine;
 
-namespace Tools
+namespace Tools.Time
 {
     public class TimeController : MonoBehaviour
     {
@@ -22,14 +22,14 @@ namespace Tools
 
         protected virtual void Awake()
         {
-            _lastFrameTime = Time.realtimeSinceStartup;
+            _lastFrameTime = UnityEngine.Time.realtimeSinceStartup;
             _gamePaused.SetValue(false);
         }
 
         protected virtual void Update()
         {
-            _deltaTime = Time.realtimeSinceStartup - _lastFrameTime;
-            _lastFrameTime = Time.realtimeSinceStartup;
+            _deltaTime = UnityEngine.Time.realtimeSinceStartup - _lastFrameTime;
+            _lastFrameTime = UnityEngine.Time.realtimeSinceStartup;
 
             if (_gamePaused == false)
             {
@@ -54,22 +54,22 @@ namespace Tools
 
         public virtual void Pause()
         {
-            Time.timeScale = 0;
+            UnityEngine.Time.timeScale = 0;
             _gamePaused.SetValue(true);
         }
 
         public virtual void Resume()
         {
-            Time.timeScale = 1;
+            UnityEngine.Time.timeScale = 1;
             _gamePaused.SetValue(false);
         }
 
-        public void Register(System.Action callback)
+        public void RegisterOnTick(System.Action callback)
         {
             OnUpdateTick += callback;
         }
 
-        public void Unregister(System.Action callback)
+        public void UnregisterOnTick(System.Action callback)
         {
             OnUpdateTick -= callback;
         }
