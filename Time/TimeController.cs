@@ -8,11 +8,14 @@ namespace Tools.Time
         public static event System.Action<float> OnUpdateTick;
 
         [SerializeField]
+        private BoolVariable _gamePaused = null;
+        public bool IsGamePaused => _gamePaused.Value;
+
+        [SerializeField]
         private float _tickInterval = 1f;
 
         [SerializeField]
-        private BoolVariable _gamePaused = null;
-        public bool IsGamePaused => _gamePaused.Value;
+        private bool _unscaledTick = false;
 
         private static float _frameDelta = 0;
         private static float _tickDelta = 0;
@@ -22,10 +25,12 @@ namespace Tools.Time
 
         private float _timer = 0;
 
+        public float CurrentSpeedMultiplier { get; private set; } = 1;
+
         protected virtual void Awake()
         {
-            _lastFrameTime = UnityEngine.Time.realtimeSinceStartup;
-            _lastTickTime = UnityEngine.Time.realtimeSinceStartup;
+            _lastFrameTime = GetTime();
+            _lastTickTime = GetTime();
             _timer = _tickInterval;
 
             _gamePaused.SetValue(false);
@@ -33,8 +38,8 @@ namespace Tools.Time
 
         protected virtual void Update()
         {
-            _frameDelta = UnityEngine.Time.realtimeSinceStartup - _lastFrameTime;
-            _lastFrameTime = UnityEngine.Time.realtimeSinceStartup;
+            _frameDelta = GetTime() - _lastFrameTime;
+            _lastFrameTime = GetTime();
 
             if (_gamePaused == false)
             {
@@ -54,8 +59,8 @@ namespace Tools.Time
 
         protected virtual void UpdateTick()
         {
-            _tickDelta = UnityEngine.Time.realtimeSinceStartup - _lastTickTime; 
-            _lastTickTime = UnityEngine.Time.realtimeSinceStartup;
+            _tickDelta = GetTime() - _lastTickTime; 
+            _lastTickTime = GetTime();
 
             OnUpdateTick?.Invoke(_tickDelta);
         }
@@ -68,8 +73,14 @@ namespace Tools.Time
 
         public virtual void Resume()
         {
-            UnityEngine.Time.timeScale = 1;
+            UnityEngine.Time.timeScale = CurrentSpeedMultiplier;
             _gamePaused.SetValue(false);
+        }
+
+        public virtual void SetSpeedMultiplier(float multiplier)
+        {
+            CurrentSpeedMultiplier = multiplier;
+            UnityEngine.Time.timeScale = CurrentSpeedMultiplier;
         }
 
         public void RegisterOnTick(System.Action<float> callback)
@@ -80,6 +91,11 @@ namespace Tools.Time
         public void UnregisterOnTick(System.Action<float> callback)
         {
             OnUpdateTick -= callback;
+        }
+
+        private float GetTime()
+        {
+            return _unscaledTick ? UnityEngine.Time.realtimeSinceStartup : UnityEngine.Time.time;
         }
     }
 }
