@@ -2,7 +2,6 @@
 
 namespace Tools.Variables
 {
-    [CreateAssetMenu(menuName = "Tools/Variables/Evaluators/Bool Evaluator")]
     public class BoolVariableEvaluator : VariableEvaluator
     {
         [SerializeField]

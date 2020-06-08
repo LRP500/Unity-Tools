@@ -2,7 +2,6 @@
 
 namespace Tools.Variables
 {
-    [CreateAssetMenu(menuName = "Tools/Variables/Evaluators/Float Evaluator")]
     public class FloatVariableEvaluator : VariableEvaluator
     {
         [SerializeField]

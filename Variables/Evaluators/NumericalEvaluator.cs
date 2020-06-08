@@ -25,6 +25,7 @@ namespace Tools
                     break;
                 default: return false;
             }
+
             HasValue = true;
             return Result;
         }

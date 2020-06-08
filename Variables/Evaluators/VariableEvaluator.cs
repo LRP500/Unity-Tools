@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-
-namespace Tools.Variables
+﻿namespace Tools.Variables
 {
-    public abstract class VariableEvaluator : ScriptableObject
+    public abstract class VariableEvaluator
     {
         public abstract bool Evaluate();
     }

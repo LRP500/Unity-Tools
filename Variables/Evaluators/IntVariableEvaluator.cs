@@ -2,7 +2,7 @@
 
 namespace Tools.Variables
 {
-    [CreateAssetMenu(menuName = "Tools/Variables/Evaluators/Int Evaluator")]
+    [System.Serializable]
     public class IntVariableEvaluator : VariableEvaluator
     {
         [SerializeField]
