@@ -48,15 +48,15 @@ namespace Tools.UI
         [Space]
         [SerializeField]
         [LabelText("Critical Treshold (%)")]
-        private float _criticalTreshold = 25f;
+        protected float _criticalTreshold = 25f;
 
         [SerializeField]
         private Color _criticalSliderColor = Color.white;
 
         private Coroutine _coroutine = null;
 
-        private float _maximumValue = 0f;
-        private float _currentValue = 0f;
+        public float MaximumValue { get; private set; } = 0f;
+        public float CurrentValue { get; private set; } = 0f;
 
         private void Start()
         {
@@ -65,8 +65,8 @@ namespace Tools.UI
 
         protected virtual void Initialize()
         {
-            _maximumValue = 0;
-            _currentValue = 0;
+            SetMax(0);
+            SetCurrent(0, false);
             _mainSlider.targetGraphic.color = _mainSliderColor;
         }
 
@@ -74,7 +74,7 @@ namespace Tools.UI
         {
             if (_valueText)
             {
-                _valueText.text = string.Join("/", _currentValue, _maximumValue);
+                _valueText.text = string.Join("/", CurrentValue, MaximumValue);
             }
         }
 
@@ -85,7 +85,7 @@ namespace Tools.UI
 
         public void SetCurrent(float value, bool animate)
         {
-            if (value != _currentValue)
+            if (value != CurrentValue)
             {
                 /// _animate = global configuration
                 /// animate = Local configuration for specific cases
@@ -106,7 +106,7 @@ namespace Tools.UI
                         StopCoroutine(_coroutine);
                     }
 
-                    if (value > _currentValue)
+                    if (value > CurrentValue)
                     {
                         if (_subSlider)
                         {
@@ -128,7 +128,7 @@ namespace Tools.UI
                     }
                 }
 
-                _currentValue = value;
+                CurrentValue = value;
 
                 RefreshText();
                 RefreshColor();
@@ -137,14 +137,14 @@ namespace Tools.UI
 
         public void SetMax(float value)
         {
-            if (value != _maximumValue)
+            if (value != MaximumValue)
             {
-                _maximumValue = value;
-                _mainSlider.maxValue = _maximumValue;
+                MaximumValue = value;
+                _mainSlider.maxValue = MaximumValue;
 
                 if (_subSlider)
                 {
-                    _subSlider.maxValue = _maximumValue;
+                    _subSlider.maxValue = MaximumValue;
                 }
 
                 RefreshText();
@@ -177,9 +177,9 @@ namespace Tools.UI
             }
         }
 
-        protected bool IsCritical()
+        protected virtual bool IsCritical()
         {
-            float ratio = 1 / (_maximumValue / _currentValue);
+            float ratio = 1 / (MaximumValue / CurrentValue);
             return ratio < (_criticalTreshold / 100);
         }
     }
