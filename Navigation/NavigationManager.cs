@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -37,10 +36,10 @@ namespace Tools.Navigation
 
         public IEnumerator DeepLoad(SceneReference scene, System.Action loadingScreenCallback)
         {
-            if (_loadingScreen == null || string.IsNullOrEmpty(_loadingScreen.path))
+            if (_loadingScreen == null)
             {
                 Debug.LogWarning("Couldn't deep load : loading scene path is set to null", this);
-                yield return FastLoad(scene);
+                yield break;
             }
             else
             {

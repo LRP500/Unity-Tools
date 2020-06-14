@@ -17,6 +17,9 @@ namespace Tools.Time
         [SerializeField]
         private bool _unscaledTick = false;
 
+        [SerializeField]
+        private TimeControllerVariable _runtimeReference = null;
+
         private static float _frameDelta = 0;
         private static float _tickDelta = 0;
 
