@@ -1,5 +1,4 @@
-﻿using System;
-using Tools.Variables;
+﻿using Tools.Variables;
 
 namespace Tools.References
 {
@@ -28,11 +27,6 @@ namespace Tools.References
         {
             if (useConstant) constant = (value == 0) ? constant : constant / value;
             else variable.SetValue(value == 0 ? variable.Value : variable.Value / value);
-        }
-
-        public void Subscribe(object refreshRemainingEnemyCount)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -32,11 +32,12 @@ namespace Tools.Time
 
         protected virtual void Awake()
         {
+            _gamePaused.SetValue(false);
+            _runtimeReference.SetValue(this);
+
             _lastFrameTime = GetTime();
             _lastTickTime = GetTime();
             _timer = _tickInterval;
-
-            _gamePaused.SetValue(false);
         }
 
         protected virtual void Update()
