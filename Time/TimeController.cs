@@ -33,7 +33,7 @@ namespace Tools.Time
         protected virtual void Awake()
         {
             _gamePaused.SetValue(false);
-            _runtimeReference.SetValue(this);
+            _runtimeReference?.SetValue(this);
 
             _lastFrameTime = GetTime();
             _lastTickTime = GetTime();
@@ -47,7 +47,7 @@ namespace Tools.Time
 
             if (_gamePaused == false)
             {
-                _timer += _frameDelta;
+                _timer += _frameDelta * CurrentSpeedMultiplier;
                 if (_timer >= _tickInterval)
                 {
                     UpdateTick();
@@ -63,8 +63,9 @@ namespace Tools.Time
 
         protected virtual void UpdateTick()
         {
-            _tickDelta = GetTime() - _lastTickTime; 
-            _lastTickTime = GetTime();
+            float currentTime = GetTime();
+            _tickDelta = currentTime - _lastTickTime;
+            _lastTickTime = currentTime;
 
             OnUpdateTick?.Invoke(_tickDelta);
         }
@@ -84,7 +85,6 @@ namespace Tools.Time
         public virtual void SetSpeedMultiplier(float multiplier)
         {
             CurrentSpeedMultiplier = multiplier;
-            UnityEngine.Time.timeScale = CurrentSpeedMultiplier;
         }
 
         public void RegisterOnTick(System.Action<float> callback)

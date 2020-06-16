@@ -31,7 +31,6 @@ namespace Tools.UI
             }
             else
             {
-                _onSelect?.Invoke();
                 SetSelected(true);
             }
         }
@@ -94,6 +93,8 @@ namespace Tools.UI
             {
                 _animator.SetTrigger("Normal");
             }
+
+            _onSelect?.Invoke();
         }
 
         public void SetDisabled(bool value)
