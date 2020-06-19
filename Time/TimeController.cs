@@ -85,6 +85,7 @@ namespace Tools.Time
         public virtual void SetSpeedMultiplier(float multiplier)
         {
             CurrentSpeedMultiplier = multiplier;
+            //UnityEngine.Time.timeScale = CurrentSpeedMultiplier;
         }
 
         public void RegisterOnTick(System.Action<float> callback)

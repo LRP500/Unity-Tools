@@ -7,8 +7,8 @@ namespace Tools.UI
     {
         public static IEnumerator FadeCanvas(CanvasGroup canvasGroup, float startAlpha, float endAlpha, float duration)
         {
-            float startTime = Time.unscaledTime;
-            float endTime = Time.unscaledTime + duration;
+            float startTime = Time.time;
+            float endTime = Time.time + duration;
             float elapsed = 0f;
 
             canvasGroup.alpha = startAlpha;
@@ -17,7 +17,7 @@ namespace Tools.UI
 
             while (Time.time <= endTime)
             {
-                elapsed = Time.unscaledTime - startTime;
+                elapsed = Time.time - startTime;
                 float percentage = 1 / (duration / elapsed);
 
                 // Fading out
@@ -35,6 +35,8 @@ namespace Tools.UI
             }
 
             canvasGroup.alpha = endAlpha;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
         }
     }
 }
