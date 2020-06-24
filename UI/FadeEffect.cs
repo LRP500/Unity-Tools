@@ -5,19 +5,19 @@ namespace Tools.UI
 {
     public static class FadeEffect
     {
-        public static IEnumerator FadeCanvas(CanvasGroup canvasGroup, float startAlpha, float endAlpha, float duration)
+        public static IEnumerator FadeCanvas(CanvasGroup canvasGroup, float startAlpha, float endAlpha, float duration, bool unscaled = false)
         {
-            float startTime = Time.time;
-            float endTime = Time.time + duration;
+            float startTime = GetTime(unscaled);
+            float endTime = startTime + duration;
             float elapsed = 0f;
 
             canvasGroup.alpha = startAlpha;
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
 
-            while (Time.time <= endTime)
+            while (GetTime(unscaled) <= endTime)
             {
-                elapsed = Time.time - startTime;
+                elapsed = GetTime(unscaled) - startTime;
                 float percentage = 1 / (duration / elapsed);
 
                 // Fading out
@@ -37,6 +37,11 @@ namespace Tools.UI
             canvasGroup.alpha = endAlpha;
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
+        }
+
+        private static float GetTime(bool unscaled = false)
+        {
+            return unscaled ? Time.unscaledTime : Time.time;
         }
     }
 }
