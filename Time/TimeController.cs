@@ -1,4 +1,5 @@
-﻿using Tools.Variables;
+﻿using Sirenix.OdinInspector;
+using Tools.Variables;
 using UnityEngine;
 
 namespace Tools.Time
@@ -12,19 +13,33 @@ namespace Tools.Time
         public bool IsGamePaused => _gamePaused.Value;
 
         [SerializeField]
+        private bool _live = true;
+
+        [SerializeField]
+        [EnableIf(nameof(_live))]
         private float _tickInterval = 1f;
 
         [SerializeField]
+        [EnableIf(nameof(_live))]
         private bool _unscaledTick = false;
 
         [SerializeField]
+        [EnableIf(nameof(_live))]
         private TimeControllerVariable _runtimeReference = null;
 
-        private static float _frameDelta = 0;
-        private static float _tickDelta = 0;
+        [Header("Info Display")]
 
-        private static float _lastFrameTime = 0;
-        private static float _lastTickTime = 0;
+        [DisplayAsString]
+        public string _timeScale = string.Empty;
+
+        [DisplayAsString]
+        public string _speedMultiplier = string.Empty;
+
+        private float _frameDelta = 0;
+        private float _tickDelta = 0;
+
+        private float _lastFrameTime = 0;
+        private float _lastTickTime = 0;
 
         private float _timer = 0;
 
@@ -32,28 +47,35 @@ namespace Tools.Time
 
         protected virtual void Awake()
         {
-            _gamePaused.SetValue(false);
             _runtimeReference?.SetValue(this);
 
             _lastFrameTime = GetTime();
             _lastTickTime = GetTime();
             _timer = _tickInterval;
+
+            SetSpeedMultiplier(1);
         }
 
         protected virtual void Update()
         {
-            _frameDelta = GetTime() - _lastFrameTime;
-            _lastFrameTime = GetTime();
-
-            if (_gamePaused == false)
+            if (_live)
             {
-                _timer += _frameDelta * CurrentSpeedMultiplier;
-                if (_timer >= _tickInterval)
+                _frameDelta = GetTime() - _lastFrameTime;
+                _lastFrameTime = GetTime();
+
+                if (_gamePaused == false)
                 {
-                    UpdateTick();
-                    _timer = 0;
+                    _timer += _frameDelta * CurrentSpeedMultiplier;
+                    if (_timer >= _tickInterval)
+                    {
+                        UpdateTick();
+                        _timer = 0;
+                    }
                 }
             }
+
+            _timeScale = UnityEngine.Time.timeScale.ToString();
+            _speedMultiplier = CurrentSpeedMultiplier.ToString();
         }
 
         protected virtual void OnDestroy()
@@ -85,7 +107,6 @@ namespace Tools.Time
         public virtual void SetSpeedMultiplier(float multiplier)
         {
             CurrentSpeedMultiplier = multiplier;
-            //UnityEngine.Time.timeScale = CurrentSpeedMultiplier;
         }
 
         public void RegisterOnTick(System.Action<float> callback)
