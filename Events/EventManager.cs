@@ -17,6 +17,12 @@ namespace Tools
         }
 
         private Dictionary<string, GameEvent> _events = null;
+
+        public void Subscribe(object takeOver)
+        {
+            throw new NotImplementedException();
+        }
+
         public Dictionary<string, GameEvent> Events
         {
             get
