@@ -1,5 +1,5 @@
 # Unity-Tools
-Toolbox for Unity game development [WORK IN PROGRESS]
+Game development toolbox for Unity [WORK IN PROGRESS]
 
 Contains :
 
