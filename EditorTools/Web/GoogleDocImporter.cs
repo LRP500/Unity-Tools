@@ -15,9 +15,9 @@ namespace Tools
         /// <summary>
         /// Base GoogleSheets URL.
         /// </summary>
-        public static readonly string baseURL = "https://docs.google.com/spreadsheets/d/";
+        public const string baseURL = "https://docs.google.com/spreadsheets/d/";
 
-        public static readonly string exportURL = "/export?format=csv";
+        private const string exportURL = "/export?format=csv";
 
         [SerializeField]
         private List<GoogleDoc> _googleDocs = null;
@@ -25,9 +25,9 @@ namespace Tools
         [Button]
         public void ImportAll()
         {
-            foreach (var doc in _googleDocs)
+            foreach (GoogleDoc doc in _googleDocs)
             {
-                foreach (var sheet in doc.sheets)
+                foreach (GoogleSheet sheet in doc.sheets)
                 {
                     var path = $"{Path.GetDirectoryName(AssetDatabase.GetAssetPath(this))}/";
                     EditorCoroutine.Start(DownloadCSV(doc.ID, Parse, sheet.ID, true, path, sheet.name));
@@ -43,29 +43,30 @@ namespace Tools
         /// <param name="docID"></param>
         /// <param name="callback"></param>
         /// <param name="saveAsset"></param>
+        /// <param name="destinationPath"></param>
         /// <param name="assetName"></param>
         /// <param name="sheetID"></param>
         /// <returns></returns>
-        public IEnumerator DownloadCSV(string docID,
+        private IEnumerator DownloadCSV(string docID,
             Action<string> callback,
             string sheetID = null,
             bool saveAsset = false,
             string destinationPath = null,
             string assetName = null)
         {
-            /// Create URL
+            // Create URL
             string url = $"{baseURL}{docID}{exportURL}";
             if (!string.IsNullOrEmpty(sheetID))
             {
                 url += $"&gid={sheetID}";
             }
 
-            /// Send web request
+            // Send web request
             UnityWebRequest webRequest = UnityWebRequest.Get(url);
             yield return webRequest.SendWebRequest();
 
-            /// Log results
-            if (webRequest.isNetworkError)
+            // Log results
+            if (webRequest.result != UnityWebRequest.Result.Success)
             {
                 Debug.Log($"Error: {webRequest.error}: {url}");
             }
@@ -104,7 +105,7 @@ namespace Tools
         public string ID;
         public List<GoogleSheet> sheets;
 
-        [Tooltip("If not path is given, assets are instanciated at current position")]
+        [Tooltip("If not path is given, assets are instantiated at current position")]
         public string assetPath;
 
         [Button]
