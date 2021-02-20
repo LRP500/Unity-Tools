@@ -35,13 +35,7 @@ namespace Tools.Extensions
         /// <summary>
         /// Remap value to another range.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="from1"></param>
-        /// <param name="to1"></param>
-        /// <param name="from2"></param>
-        /// <param name="to2"></param>
-        /// <returns></returns>
-        public static float Convert(this float value, float minA, float maxA, float minB, float maxB)
+        public static float Remap(this float value, float minA, float maxA, float minB, float maxB)
         {
             float normal = Mathf.InverseLerp(minA, maxA, value);
             return Mathf.Lerp(minB, maxB, normal);

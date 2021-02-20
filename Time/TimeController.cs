@@ -9,8 +9,7 @@ namespace Tools.Time
         public static event System.Action<float> OnUpdateTick;
 
         [SerializeField]
-        private BoolVariable _gamePaused = null;
-        public bool IsGamePaused => _gamePaused.Value;
+        private BoolVariable _gamePaused;
 
         [SerializeField]
         private bool _live = true;
@@ -21,11 +20,11 @@ namespace Tools.Time
 
         [SerializeField]
         [EnableIf(nameof(_live))]
-        private bool _unscaledTick = false;
+        private bool _unscaledTick;
 
         [SerializeField]
         [EnableIf(nameof(_live))]
-        private TimeControllerVariable _runtimeReference = null;
+        private TimeControllerVariable _runtimeReference;
 
         [Header("Info Display")]
 
@@ -35,13 +34,15 @@ namespace Tools.Time
         [DisplayAsString]
         public string _speedMultiplier = string.Empty;
 
-        private float _frameDelta = 0;
-        private float _tickDelta = 0;
+        private float _frameDelta;
+        private float _tickDelta;
 
-        private float _lastFrameTime = 0;
-        private float _lastTickTime = 0;
+        private float _lastFrameTime;
+        private float _lastTickTime;
 
-        private float _timer = 0;
+        private float _timer;
+
+        public float _lastSpeedMultiplier;
 
         public float CurrentSpeedMultiplier { get; private set; } = 1;
 
@@ -106,15 +107,16 @@ namespace Tools.Time
 
         public virtual void SetSpeedMultiplier(float multiplier)
         {
+            _lastSpeedMultiplier = CurrentSpeedMultiplier;
             CurrentSpeedMultiplier = multiplier;
         }
 
-        public void RegisterOnTick(System.Action<float> callback)
+        public static void RegisterOnTick(System.Action<float> callback)
         {
             OnUpdateTick += callback;
         }
 
-        public void UnregisterOnTick(System.Action<float> callback)
+        public static void UnregisterOnTick(System.Action<float> callback)
         {
             OnUpdateTick -= callback;
         }
@@ -122,6 +124,16 @@ namespace Tools.Time
         private float GetTime()
         {
             return _unscaledTick ? UnityEngine.Time.realtimeSinceStartup : UnityEngine.Time.time;
+        }
+
+        public void Freeze()
+        {
+            SetSpeedMultiplier(0);
+        }
+
+        public void Unfreeze()
+        {
+            SetSpeedMultiplier(_lastSpeedMultiplier);
         }
     }
 }
