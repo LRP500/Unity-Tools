@@ -10,10 +10,17 @@ namespace Tools.Variables
     {
         public static event System.Action OnValueChanged;
 
+        /// <summary>
+        /// The variable's current value.
+        /// </summary>
         [SerializeField]
-        protected T _value = default;
+        protected T _value;
         public T Value => _value;
 
+        /// <summary>
+        /// Sets the variable's value.
+        /// </summary>
+        /// <param name="value"></param>
         public void SetValue(T value)
         {
             T oldValue = _value;
@@ -24,6 +31,16 @@ namespace Tools.Variables
             {
                 OnValueChanged?.Invoke();
             }
+        }
+
+        /// <summary>
+        /// Sets the variable's value and force trigger value changed event.
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetValueAndForceNotify(T value)
+        {
+            _value = value;
+            OnValueChanged?.Invoke();
         }
 
         /// <summary>

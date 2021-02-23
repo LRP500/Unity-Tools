@@ -14,7 +14,7 @@ namespace Tools.Extensions
         /// <param name="value"></param>
         /// <param name="tolerance"></param>
         /// <returns></returns>
-        public static bool AlmostEqual(this float self, float value, float tolerance)
+        public static bool AlmostEqual(this float self, float value, float tolerance = 0.001f)
         {
             return Mathf.Abs(self - value) < tolerance;
         }
